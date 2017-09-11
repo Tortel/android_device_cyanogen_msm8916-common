@@ -34,6 +34,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <android-base/properties.h>
 #include "vendor_init.h"
 #include "property_service.h"
 #include "log.h"
@@ -73,7 +74,7 @@ static void init_alarm_boot_properties()
 {
     char const *alarm_file = "/proc/sys/kernel/boot_reason";
     char buf[64];
-    std::string tmp = property_get("ro.boot.alarmboot");
+    std::string tmp = android::base::GetProperty("ro.boot.alarmboot", "");
 
     if (read_file2(alarm_file, buf, sizeof(buf))) {
         /*
